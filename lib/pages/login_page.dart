@@ -14,7 +14,7 @@ class _LoginPageState extends State<LoginPage> {
   late TextEditingController emailController;
   late TextEditingController passwordController;
 
-  late GlobalKey<FormState> fromKey;
+  late GlobalKey<FormState> formKey;
 
   bool obsecureText = true;
 
@@ -22,7 +22,7 @@ class _LoginPageState extends State<LoginPage> {
   void initState() {
     emailController = TextEditingController();
     passwordController = TextEditingController();
-    fromKey = GlobalKey<FormState>();
+    formKey = GlobalKey<FormState>();
     super.initState();
   }
 
@@ -33,76 +33,82 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(decoration: BoxDecoration(image: DecorationImage(image: AssetImage("assets/images/main_photo.png"), fit:BoxFit.fill )),
-        child: Center(
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Form(
-              key: fromKey,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  TextFormField(
-                      keyboardType: TextInputType.emailAddress,
-                      controller: emailController,
-                      decoration: const InputDecoration(
-                        label: Text('Email'),
-                        suffixIcon: Icon(Icons.email),
-                      ),
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'email is required';
-                        }
+    return
+      Scaffold(
 
-                        if (!EmailValidator.validate(value)) {
-                          return 'Not Valid Email';
-                        }
-                        return null;
-                      }),
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  TextFormField(
-                      obscureText: obsecureText,
-                      controller: passwordController,
-                      decoration: InputDecoration(
-                          label: const Text('Password'),
-                          suffixIcon: InkWell(
-                            onTap: () => toggleObsecure(),
-                            child: Icon(obsecureText
-                                ? Icons.visibility_off
-                                : Icons.visibility),
-                          )),
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'password is required';
-                        }
+         body:
+         Container(decoration: BoxDecoration(image: DecorationImage(image: AssetImage("assets/images/main_photo.png"), fit:BoxFit.fill )),
+           child: Center(
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Form(
+                  key: formKey,
+                   child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [Image.asset("assets/images/Logo (2).png"),
+                        TextFormField(
+                            keyboardType: TextInputType.emailAddress,
+                            controller: emailController,
+                            decoration: const InputDecoration(
+                              label: Text('Email'),
+                              suffixIcon: Icon(Icons.email),
+                            ),
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'email is required';
+                              }
 
-                        if (value.length < 6) {
-                          return 'password too short';
-                        }
-                        return null;
-                      }),
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  ElevatedButton(style: ElevatedButton.styleFrom(backgroundColor:Colors.orange),
-                      onPressed: () async {
-                        if (fromKey.currentState?.validate() ?? false) {
-                          await PrefrencesService.prefs?.setBool('isLogin', true);
+                              if (!EmailValidator.validate(value)) {
+                                return 'Not Valid Email';
+                              }
+                              return null;
+                            }),
+                        const SizedBox(
+                          height: 15,
+                        ),
+                        TextFormField(
+                            obscureText: obsecureText,
+                            controller: passwordController,
+                            decoration: InputDecoration(
+                                label: const Text('Password'),
+                                suffixIcon: InkWell(
+                                  onTap: () => toggleObsecure(),
+                                  child: Icon(obsecureText
+                                      ? Icons.visibility_off
+                                      : Icons.visibility),
+                                )),
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'password is required';
+                              }
 
-                          Navigator.pushReplacement(context,
-                              MaterialPageRoute(builder: (_) => HomePage()));
-                        }
-                      },
-                      child: const Text('Sign in'))
-                ],
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
+                              if (value.length < 6) {
+                                return 'password too short';
+                              }
+                              return null;
+                            }),
+                        const SizedBox(
+                          height: 15,
+                        ),
+                        ElevatedButton(style: ElevatedButton.styleFrom(backgroundColor:Colors.orange),
+                            onPressed: () async {
+                              if (formKey.currentState?.validate() ?? false) {
+                                await PrefrencesService.prefs?.setBool('isLogin', true);
+
+                                Navigator.pushReplacement(context,
+                                    MaterialPageRoute(builder: (_) => HomePage()));
+                              }
+                            },
+                            child: const Text('Sign in'))
+                      ],
+                    ),
+
+                ),
+      ))));
+
+
+
+
+
   }
 }
