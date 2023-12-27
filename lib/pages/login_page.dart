@@ -45,7 +45,7 @@ class _LoginPageState extends State<LoginPage> {
                   key: formKey,
                    child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
-                      children: [Image.asset("assets/images/Logo (2).png"),
+                      children: [Image.asset("assets/images/Logo (1).png"),
                         TextFormField(
                             keyboardType: TextInputType.emailAddress,
                             controller: emailController,
