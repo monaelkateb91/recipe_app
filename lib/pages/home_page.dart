@@ -10,38 +10,37 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  int sliderIndex=0;
+  final images= [
+  Image.asset(
+  'assets/images/Cinnamon Toaast copy.png',
+  ),
+  Image.asset(
+  'assets/images/detail_GlazedSalmon_2 copy.png',
+  ),
+  Image.asset(
+  'assets/images/brown-eggs.jpg',
+  ),
+  Image.asset(
+  'assets/images/frensh toast 2 copy.png',
+  )];
+  CarouselController carouselControllerEx=CarouselController();
+
   @override
   Widget build(BuildContext context) {
 
-    var sliderIndex=0;
-    CarouselController carouselControllerEx=CarouselController();
+
+
 
     return SafeArea(
       child: Scaffold(
         body: Center(
-            child: Column(
+            child: Stack(
           children: [
             CarouselSlider(
               carouselController:carouselControllerEx ,
-                items: [
-                  Image.asset(
-                    'assets/images/Cinnamon Toaast copy.png',
-                  ),
-                  Image.asset(
-                    'assets/images/detail_GlazedSalmon_2 copy.png',
-                  ),
-                  Image.asset(
-                    'assets/images/brown-eggs.jpg',
-                  ),
-                  Image.asset(
-                    'assets/images/frensh toast 2 copy.png',
-                  )
-                ].map((i) {
-                  return Container(
-                    width: MediaQuery.of(context).size.width,
-                    margin: EdgeInsets.symmetric(horizontal: 5.0),
-                  );
-                }).toList(),
+                items:images,
+
                 options: CarouselOptions(
                     height: 200,
                     autoPlay: true,
@@ -55,12 +54,30 @@ class _HomePageState extends State<HomePage> {
                       });
                       print('${index}');
                     })),
+            Align(alignment: Alignment.centerLeft,
+              child: IconButton(
+                onPressed: () async{
+
+                  await carouselControllerEx.previousPage();
+                },
+                icon: Icon(Icons.arrow_back),
+              ),
+            ),
+            Align(
+              alignment: Alignment.centerRight,
+              child: IconButton(
+                onPressed: () async{
+
+                  await carouselControllerEx.nextPage();
+                },
+                icon: Icon(Icons.arrow_forward),
+              ),),
             DotsIndicator(
               dotsCount: 4,
               position: sliderIndex,
               onTap: (position) async{
                await carouselControllerEx.animateToPage(position);
-               sliderIndex:position;
+               sliderIndex=position;
                setState(() {
 
                });
