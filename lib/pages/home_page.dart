@@ -10,68 +10,91 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  CarouselController carouselControllerEx=CarouselController();
+  int sliderIndex=0;
+  final images= [
+    Image.asset(
+      'assets/images/Cinnamon Toaast copy.png',
+    ),
+    Image.asset(
+      'assets/images/detail_GlazedSalmon_2 copy.png',
+    ),
+    Image.asset(
+      'assets/images/brown-eggs.jpg',
+    ),
+    Image.asset(
+      'assets/images/frensh toast 2 copy.png',
+    )];
+
   @override
   Widget build(BuildContext context) {
 
-    var sliderIndex=0;
-    CarouselController carouselControllerEx=CarouselController();
+
+
 
     return SafeArea(
       child: Scaffold(
         body: Center(
-            child: Column(
-          children: [
-            CarouselSlider(
-              carouselController:carouselControllerEx ,
-                items: [
-                  Image.asset(
-                    'assets/images/Cinnamon Toaast copy.png',
-                  ),
-                  Image.asset(
-                    'assets/images/detail_GlazedSalmon_2 copy.png',
-                  ),
-                  Image.asset(
-                    'assets/images/brown-eggs.jpg',
-                  ),
-                  Image.asset(
-                    'assets/images/frensh toast 2 copy.png',
-                  )
-                ].map((i) {
-                  return Container(
-                    width: MediaQuery.of(context).size.width,
-                    margin: EdgeInsets.symmetric(horizontal: 5.0),
-                  );
-                }).toList(),
-                options: CarouselOptions(
-                    height: 200,
-                    autoPlay: true,
-                    viewportFraction: 0.75,
-                    enlargeStrategy: CenterPageEnlargeStrategy.height,
-                    enlargeCenterPage: true,
-                    onPageChanged: (index, _) {
-                      sliderIndex=index;
+            child: Stack(
+              children: [
+                CarouselSlider(
+                    carouselController:carouselControllerEx ,
+                    items:images,
+
+                    options: CarouselOptions(
+                        height: 200,
+                        autoPlay: true,
+                        viewportFraction: 0.75,
+                        enlargeStrategy: CenterPageEnlargeStrategy.height,
+                        enlargeCenterPage: true,
+                        onPageChanged: (index, _) {
+                          sliderIndex=index;
+                          setState(() {
+
+                          });
+                          print('${index}');
+                        })),
+                Align(alignment: Alignment.centerLeft,
+                  child: IconButton(
+                    onPressed: () async{
+
+                      await carouselControllerEx.previousPage();
                       setState(() {
 
                       });
-                      print('${index}');
-                    })),
-            DotsIndicator(
-              dotsCount: 4,
-              position: sliderIndex,
-              onTap: (position) async{
-               await carouselControllerEx.animateToPage(position);
-               sliderIndex:position;
-               setState(() {
+                    },
+                    icon: Icon(Icons.arrow_back),
+                  ),
+                ),
+                Align(
+                  alignment: Alignment.centerRight,
+                  child: IconButton(
+                    onPressed: () async{
 
-               });
-              },
-              decorator: DotsDecorator(
-                  size: const Size.square(9.0),
-                  activeShape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(5.0))),
-            )
-          ],
-        )),
+                      await carouselControllerEx.nextPage();
+                      setState(() {
+
+                      });
+                    },
+                    icon: Icon(Icons.arrow_forward),
+                  ),),
+                DotsIndicator(
+                  dotsCount: 4,
+                  position: sliderIndex,
+                  onTap: (position) async{
+                    await carouselControllerEx.animateToPage(position);
+                    sliderIndex=position;
+                    setState(() {
+
+                    });
+                  },
+                  decorator: DotsDecorator(
+                      size: const Size.square(9.0),
+                      activeShape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(5.0))),
+                )
+              ],
+            )),
       ),
     );
   }
