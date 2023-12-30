@@ -32,10 +32,11 @@ class _HomePageState extends State<HomePage> {
 
 
 
-    return SafeArea(
-      child: Scaffold(
-        body: Center(
-            child: Stack(
+    return Scaffold(
+      body: SafeArea(
+        child:Column(
+          children: [
+            Stack(
               children: [
                 CarouselSlider(
                     carouselController:carouselControllerEx ,
@@ -52,50 +53,65 @@ class _HomePageState extends State<HomePage> {
                           setState(() {
 
                           });
-                          print('${index}');
+
                         })),
-                Align(alignment: Alignment.centerLeft,
-                  child: IconButton(
-                    onPressed: () async{
+                Positioned.fill(
+                  child: Align(child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      IconButton(
+                        onPressed: () async{
 
-                      await carouselControllerEx.previousPage();
-                      setState(() {
+                          await carouselControllerEx.previousPage();
+                          setState(() {
 
-                      });
-                    },
-                    icon: Icon(Icons.arrow_back),
-                  ),
-                ),
-                Align(
-                  alignment: Alignment.centerRight,
-                  child: IconButton(
-                    onPressed: () async{
+                          });
+                        },
+                        icon: Icon(Icons.arrow_back),
+                      ),IconButton(
+                        onPressed: () async{
 
-                      await carouselControllerEx.nextPage();
-                      setState(() {
+                          await carouselControllerEx.nextPage();
+                          setState(() {
 
-                      });
-                    },
-                    icon: Icon(Icons.arrow_forward),
-                  ),),
-                DotsIndicator(
-                  dotsCount: 4,
-                  position: sliderIndex,
-                  onTap: (position) async{
-                    await carouselControllerEx.animateToPage(position);
-                    sliderIndex=position;
-                    setState(() {
-
-                    });
-                  },
-                  decorator: DotsDecorator(
-                      size: const Size.square(9.0),
-                      activeShape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(5.0))),
+                          });
+                        },
+                        icon: Icon(Icons.arrow_forward),
+                      )
+                    ],
+                  )),
                 )
+
               ],
-            )),
+            )
+            ,DotsIndicator( dotsCount: 4,
+              position: sliderIndex,
+              onTap: (position) async{
+                await carouselControllerEx.animateToPage(position);
+                sliderIndex=position;
+                setState(() {
+
+                });
+              },
+              decorator: DotsDecorator(
+                  size: const Size.square(9.0),
+                  activeShape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(5.0))),
+            )],
+        ) ,
       ),
     );
+
+
+
+
+
+
+
+
+
+
+
+
   }
 }
