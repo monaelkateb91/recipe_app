@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:recipe_app/pages/home_page.dart';
 import 'package:recipe_app/pages/login_page.dart';
-import 'package:recipe_app/services/perefrene_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SplashPage extends StatefulWidget {
@@ -24,11 +23,11 @@ class _SplashPageState extends State<SplashPage> {
     await Future.delayed(const Duration(seconds: 3));
     if (GetIt.I.get<SharedPreferences>().getBool('isLogin') ?? false) {
       Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (_) => HomePage()));
+          context, MaterialPageRoute(builder: (_) => const HomePage()));
       // go to home page
     } else {
       Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (_) => LoginPage()));
+          context, MaterialPageRoute(builder: (_) => const LoginPage()));
       // go to login page
     }
   }
@@ -36,7 +35,7 @@ class _SplashPageState extends State<SplashPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return const Scaffold(
       body: Center(
         child: CircularProgressIndicator(),
       ),

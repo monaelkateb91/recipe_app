@@ -1,6 +1,10 @@
+
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:recipe_app/pages/provider.dart';
+
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -12,62 +16,96 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   CarouselController carouselControllerEx = CarouselController();
   int sliderIndex = 0;
-  final images = [
-    Image.asset(
-      'assets/images/Cinnamon Toaast copy.png',
-    ),
-    Image.asset(
-      'assets/images/detail_GlazedSalmon_2 copy.png',
-    ),
-    Image.asset(
-      'assets/images/lots-blueberries copy.jpg',
-    ),
-    Image.asset(
-      'assets/images/frensh toast 2 copy.png',
-    )
-  ];
+
+  //List<Ad> adsList = [];
+
+  //void getAds() async {
+    //var adsData = await rootBundle.loadString('assets/data/sample.json');
+    //var dataDecoded =
+    //List<Map<String, dynamic>>.from(jsonDecode(adsData)['ads']);
+
+    //adsList = dataDecoded.map((e) => Ad.fromJson(e)).toList();
+    //setState(() {});
+
+ // }
+
+
+ // @override
+ // void initState() {
+    //getAds();
+   // super.initState();
+ // }
 
   @override
   Widget build(BuildContext context) {
+    return Consumer<AdsProvider>(builder: (context, adsprovider,child){
     return Scaffold(
       appBar: AppBar(
-        leading: Padding(
+        leading: const Padding(
           padding: EdgeInsets.symmetric(),
           child: Icon(Icons.menu),
         ),
-        actions: [
+        actions: const [
           Padding(
-            padding: const EdgeInsets.symmetric(),
+            padding: EdgeInsets.symmetric(),
             child: Icon(Icons.notification_add),
           )
         ],
       ),
       body: SafeArea(
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              Text(
-                "What would you like to cook for today?",
-                style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 25,
-                    color: Colors.black),
-              ),
-              Stack(
-                children: [
-                  CarouselSlider(
-                      carouselController: carouselControllerEx,
-                      items: images,
-                      options: CarouselOptions(
-                          height: 200,
-                          autoPlay: true,
-                          viewportFraction: 0.75,
-                          enlargeStrategy: CenterPageEnlargeStrategy.height,
-                          enlargeCenterPage: true,
-                          onPageChanged: (index, _) {
-                            sliderIndex = index;
-                            setState(() {});
-                          })),
+
+          child: //adsList.isEmpty
+              //? const
+          //CircularProgressIndicator()
+      SingleChildScrollView(
+            child: Column(
+              children: [
+                CarouselSlider(
+                  carouselController: carouselControllerEx,
+                  options: CarouselOptions(
+                      autoPlay: true,
+                      height: 200,
+                      viewportFraction: .75,
+                      enlargeStrategy: CenterPageEnlargeStrategy.height,
+                      enlargeCenterPage: true,
+                      onPageChanged: (index, _) {
+                        sliderIndex = index;
+                        setState(() {});
+                      },
+                      enlargeFactor: .3),
+                  items: adsprovider.adsList.map((ad) {
+                    return Stack(
+                      children: [
+                        Container(
+                          width: MediaQuery.of(context).size.width,
+                          margin:
+                          const EdgeInsets.symmetric(horizontal: 5.0),
+                          decoration: BoxDecoration(
+                              image: DecorationImage(
+                                  fit: BoxFit.fitWidth,
+                                  image: NetworkImage(ad.image!))),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Container(
+                            decoration: BoxDecoration(
+                                color: Colors.black38,
+                                borderRadius: BorderRadius.circular(25)),
+                            child: Padding(
+                              padding: const EdgeInsets.all(4.0),
+                              child: Text(
+                                ad.title.toString(),
+                                style: const TextStyle(
+                                    fontSize: 16.0, color: Colors.white),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    );
+                  }).toList(),
+                ),
+
                   Positioned.fill(
                     child: Align(
                         child: Row(
@@ -78,20 +116,20 @@ class _HomePageState extends State<HomePage> {
                             await carouselControllerEx.previousPage();
                             setState(() {});
                           },
-                          icon: Icon(Icons.arrow_back),
+                          icon: const Icon(Icons.arrow_back),
                         ),
                         IconButton(
                           onPressed: () async {
                             await carouselControllerEx.nextPage();
                             setState(() {});
                           },
-                          icon: Icon(Icons.arrow_forward),
+                          icon: const Icon(Icons.arrow_forward),
                         )
                       ],
                     )),
                   )
-                ],
-              ),
+                ,
+
               DotsIndicator(
                 dotsCount: 4,
                 position: sliderIndex,
@@ -105,7 +143,7 @@ class _HomePageState extends State<HomePage> {
                     activeShape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(5.0))),
               ),
-              SingleChildScrollView(
+              const SingleChildScrollView(
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
@@ -145,12 +183,12 @@ class _HomePageState extends State<HomePage> {
                           Row(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Icon(
+                              const Icon(
                                 Icons.favorite_outline,
                                 color: Colors.grey,
                               ),
                               Transform.translate(
-                                offset: Offset(20, 0),
+                                offset: const Offset(20, 0),
                                 child: Image.asset(
                                   'assets/images/frensh toast 2 copy.png',
                                   height: 140,
@@ -160,7 +198,7 @@ class _HomePageState extends State<HomePage> {
                               )
                             ],
                           ),
-                          Column(
+                          const Column(
                             children: [
                               Row(
                                 children: [
@@ -174,7 +212,7 @@ class _HomePageState extends State<HomePage> {
                               ),
                               Padding(
                                 padding:
-                                const EdgeInsets.symmetric(vertical: 4),
+                                EdgeInsets.symmetric(vertical: 4),
                                 child: Row(
                                   children: [
                                     Text(
@@ -211,7 +249,7 @@ class _HomePageState extends State<HomePage> {
                               ),
                               Padding(
                                 padding:
-                                const EdgeInsets.symmetric(vertical: 8),
+                                EdgeInsets.symmetric(vertical: 8),
                                 child: Row(
                                   children: [
                                     Text(
@@ -229,7 +267,7 @@ class _HomePageState extends State<HomePage> {
                               ),
                             ],
                           ),
-                          Row(
+                          const Row(
                             mainAxisAlignment:
                             MainAxisAlignment.spaceBetween,
                             children: [
@@ -240,7 +278,7 @@ class _HomePageState extends State<HomePage> {
                                     size: 18,
                                     color: Colors.grey,
                                   ),
-                                  const SizedBox(
+                                  SizedBox(
                                     width: 4,
                                   ),
                                   Text(
@@ -256,7 +294,7 @@ class _HomePageState extends State<HomePage> {
                                     size: 18,
                                     color: Colors.grey,
                                   ),
-                                  const SizedBox(
+                                  SizedBox(
                                     width: 4,
                                   ),
                                   Text(
@@ -287,12 +325,12 @@ class _HomePageState extends State<HomePage> {
                               Row(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Icon(
+                                  const Icon(
                                     Icons.favorite_outline,
                                     color: Colors.grey,
                                   ),
                                   Transform.translate(
-                                    offset: Offset(20, 0),
+                                    offset: const Offset(20, 0),
                                     child: Image.asset(
                                       'assets/images/Cinnamon Toaast copy.png',
                                       height: 140,
@@ -302,7 +340,7 @@ class _HomePageState extends State<HomePage> {
                                   )
                                 ],
                               ),
-                              Column(
+                              const Column(
                                 children: [
                                   Row(
                                     children: [
@@ -316,7 +354,7 @@ class _HomePageState extends State<HomePage> {
                                   ),
                                   Padding(
                                     padding:
-                                    const EdgeInsets.symmetric(vertical: 4),
+                                    EdgeInsets.symmetric(vertical: 4),
                                     child: Row(
                                       children: [
                                         Text(
@@ -353,7 +391,7 @@ class _HomePageState extends State<HomePage> {
                                   ),
                                   Padding(
                                     padding:
-                                    const EdgeInsets.symmetric(vertical: 8),
+                                    EdgeInsets.symmetric(vertical: 8),
                                     child: Row(
                                       children: [
                                         Text(
@@ -371,7 +409,7 @@ class _HomePageState extends State<HomePage> {
                                   ),
                                 ],
                               ),
-                              Row(
+                              const Row(
                                 mainAxisAlignment:
                                 MainAxisAlignment.spaceBetween,
                                 children: [
@@ -382,7 +420,7 @@ class _HomePageState extends State<HomePage> {
                                         size: 18,
                                         color: Colors.grey,
                                       ),
-                                      const SizedBox(
+                                      SizedBox(
                                         width: 4,
                                       ),
                                       Text(
@@ -398,7 +436,7 @@ class _HomePageState extends State<HomePage> {
                                         size: 18,
                                         color: Colors.grey,
                                       ),
-                                      const SizedBox(
+                                      SizedBox(
                                         width: 4,
                                       ),
                                       Text(
@@ -415,10 +453,11 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ],)
 
-            ],
-          ),
+
+          ]),
         ),
-      ),
-    );
-  }
+
+    ));
+  });
+}
 }

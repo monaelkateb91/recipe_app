@@ -37,7 +37,7 @@ class _LoginPageState extends State<LoginPage> {
       Scaffold(
 
          body:
-         Container(decoration: BoxDecoration(image: DecorationImage(image: AssetImage("assets/images/main_photo.png"), fit:BoxFit.fill )),
+         Container(decoration: const BoxDecoration(image: DecorationImage(image: AssetImage("assets/images/main_photo.png"), fit:BoxFit.fill )),
            child: Center(
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
@@ -96,7 +96,7 @@ class _LoginPageState extends State<LoginPage> {
                                 await PrefrencesService.prefs?.setBool('isLogin', true);
 
                                 Navigator.pushReplacement(context,
-                                    MaterialPageRoute(builder: (_) => HomePage()));
+                                    MaterialPageRoute(builder: (_) => const HomePage()));
                               }
                             },
                             child: const Text('Sign in'))

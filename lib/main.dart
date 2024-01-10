@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:provider/provider.dart';
+import 'package:recipe_app/pages/provider.dart';
 import 'package:recipe_app/pages/splash_screen.dart';
 import 'package:recipe_app/services/perefrene_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -17,9 +19,10 @@ void main() async {
     }
   } catch (e) {
     print(
-        'Error In init Prefrences ${e}');
+        'Error In init Prefrences $e');
   }
-  runApp(const MyApp());
+  runApp(ChangeNotifierProvider(
+      create: (context) => AdsProvider(), child: const MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -28,8 +31,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+
       debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
+
       theme: ThemeData(
         inputDecorationTheme: InputDecorationTheme(
           filled: true,
@@ -39,7 +43,9 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.green),
         useMaterial3: true,
       ),
-      home: SplashPage(),
+      home: const SplashPage(),
+
+
     );
   }
 }
