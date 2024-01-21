@@ -1,7 +1,12 @@
-import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
-import 'package:recipe_app/pages/home_page.dart';
-import 'package:recipe_app/services/perefrene_service.dart';
+import 'package:provider/provider.dart';
+import 'package:recipe_app/pages/sign_up.dart';
+import 'package:recipe_app/provider/auth.provider.dart';
+import 'package:recipe_app/utils/color.dart';
+import 'package:recipe_app/utils/images.dart';
+
+import '../widgets/widget_scrollable.dart';
+
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -11,104 +16,157 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  late TextEditingController emailController;
-  late TextEditingController passwordController;
-
-  late GlobalKey<FormState> formKey;
-
-  bool obsecureText = true;
-
   @override
   void initState() {
-    emailController = TextEditingController();
-    passwordController = TextEditingController();
-    formKey = GlobalKey<FormState>();
+    Provider.of<AppAuthProvider>(context, listen: false).providerInit();
     super.initState();
-  }
-
-  void toggleObsecure() {
-    obsecureText = !obsecureText;
-    setState(() {});
   }
 
   @override
   Widget build(BuildContext context) {
-    return
-      Scaffold(
-
-         body:
-         Container(decoration: const BoxDecoration(image: DecorationImage(image: AssetImage("assets/images/main_photo.png"), fit:BoxFit.fill )),
-           child: Center(
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Form(
-                  key: formKey,
-                   child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [Image.asset("assets/images/Logo (1).png"),
-                        TextFormField(
-                            keyboardType: TextInputType.emailAddress,
-                            controller: emailController,
-                            decoration: const InputDecoration(
-                              label: Text('Email'),
-                              suffixIcon: Icon(Icons.email),
-                            ),
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return 'email is required';
-                              }
-
-                              if (!EmailValidator.validate(value)) {
-                                return 'Not Valid Email';
-                              }
-                              return null;
-                            }),
-                        const SizedBox(
-                          height: 15,
+    return Scaffold(
+      body: Stack(
+        children: [
+          Container(
+            decoration: BoxDecoration(
+                image: DecorationImage(
+                    image: AssetImage(ImagesPath.background),
+                    fit: BoxFit.cover)),
+          ),
+          Container(
+            decoration: const BoxDecoration(color: Colors.black38),
+          ),
+          Consumer<AppAuthProvider>(
+            builder: (context, authProvider, _) => Form(
+              key: authProvider.formKey,
+              child: WidgetScrollable(
+                isColumn: true,
+                columnMainAxisAlignment: MainAxisAlignment.center,
+                widgets: [
+                  Padding(
+                    padding: const EdgeInsets.only(
+                        left: 50, right: 50, top: 50, bottom: 25),
+                    child: Image.asset(ImagesPath.baseHeader),
+                  ),
+                  Text(
+                    'Login',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  const SizedBox(
+                    height: 15,
+                  ),
+                  TextFormField(
+                    controller: authProvider.emailController,
+                    style: TextStyle(color: Colors.white),
+                    decoration: InputDecoration(
+                        focusedBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(color: Colors.white)),
+                        enabledBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(color: Colors.white)),
+                        border: UnderlineInputBorder(
+                            borderSide: BorderSide(color: Colors.white)),
+                        fillColor: Colors.transparent,
+                        filled: true,
+                        hintStyle: TextStyle(color: Colors.white),
+                        hintText: 'email',
+                        prefixIcon: Icon(
+                          Icons.person,
+                          color: Colors.white,
+                        )),
+                    validator: (value) {
+                      if (value == null || (value?.isEmpty ?? false)) {
+                        return 'Email Is Required';
+                      }
+                      return null;
+                    },
+                  ),
+                  const SizedBox(
+                    height: 15,
+                  ),
+                  TextFormField(
+                    obscureText: authProvider.obsecureText,
+                    style: TextStyle(color: Colors.white),
+                    controller: authProvider.passwordController,
+                    decoration: InputDecoration(
+                        suffixIcon: InkWell(
+                          onTap: () => authProvider.toggleObsecure(),
+                          child: authProvider.obsecureText
+                              ? Icon(
+                            Icons.visibility_off,
+                            color: Colors.white,
+                          )
+                              : Icon(
+                            Icons.visibility,
+                            color: Colors.white,
+                          ),
                         ),
-                        TextFormField(
-                            obscureText: obsecureText,
-                            controller: passwordController,
-                            decoration: InputDecoration(
-                                label: const Text('Password'),
-                                suffixIcon: InkWell(
-                                  onTap: () => toggleObsecure(),
-                                  child: Icon(obsecureText
-                                      ? Icons.visibility_off
-                                      : Icons.visibility),
-                                )),
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return 'password is required';
-                              }
-
-                              if (value.length < 6) {
-                                return 'password too short';
-                              }
-                              return null;
-                            }),
-                        const SizedBox(
-                          height: 15,
+                        focusedBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(color: Colors.white)),
+                        enabledBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(color: Colors.white)),
+                        border: UnderlineInputBorder(
+                            borderSide: BorderSide(color: Colors.white)),
+                        fillColor: Colors.transparent,
+                        filled: true,
+                        hintStyle: TextStyle(color: Colors.white),
+                        hintText: 'password',
+                        prefixIcon: Icon(
+                          Icons.password,
+                          color: Colors.white,
+                        )),
+                    validator: (value) {
+                      if (value == null || (value?.isEmpty ?? false)) {
+                        return 'Password Is Required';
+                      }
+                      return null;
+                    },
+                  ),
+                  const SizedBox(
+                    height: 15,
+                  ),
+                  ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                          fixedSize: Size(400, 50),
+                          backgroundColor: Color(ColorsConst.mainColor)),
+                      onPressed: () => authProvider.logIn(context),
+                      child:
+                      Text('Login', style: TextStyle(color: Colors.white))),
+                  const SizedBox(
+                    height: 15,
+                  ),
+                ],
+              ),
+            ),
+          ),
+          if (MediaQuery.of(context).viewInsets.bottom == 0)
+            Positioned.fill(
+              bottom: 10,
+              child: Align(
+                alignment: Alignment.bottomCenter,
+                child: Padding(
+                  padding: EdgeInsets.only(top: 8),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      InkWell(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (_) => const RegisterPage()));
+                        },
+                        child: const Text(
+                          'Not Have Account , Register Now ?',
+                          style: TextStyle(color: Colors.white),
                         ),
-                        ElevatedButton(style: ElevatedButton.styleFrom(backgroundColor:Colors.orange),
-                            onPressed: () async {
-                              if (formKey.currentState?.validate() ?? false) {
-                                await PrefrencesService.prefs?.setBool('isLogin', true);
-
-                                Navigator.pushReplacement(context,
-                                    MaterialPageRoute(builder: (_) => const HomePage()));
-                              }
-                            },
-                            child: const Text('Sign in'))
-                      ],
-                    ),
-
+                      ),
+                    ],
+                  ),
                 ),
-      ))));
-
-
-
-
-
+              ),
+            )
+        ],
+      ),
+    );
   }
 }

@@ -4,7 +4,8 @@ import 'package:provider/provider.dart';
 
 import 'package:recipe_app/utils/images.dart';
 
-import '../model/provider/auth.provider.dart';
+
+import '../provider/auth.provider.dart';
 import '../utils/color.dart';
 
 
@@ -44,7 +45,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Spacer(
+                  const Spacer(
                     flex: 1,
                   ),
                   Padding(
@@ -52,7 +53,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         left: 50, right: 50, top: 50, bottom: 25),
                     child: Image.asset(ImagesPath.baseHeader),
                   ),
-                  Text(
+                  const Text(
                     'Register',
                     style: TextStyle(color: Colors.white),
                   ),
@@ -61,8 +62,8 @@ class _RegisterPageState extends State<RegisterPage> {
                   ),
                   TextFormField(
                     controller: authProvider.emailController,
-                    style: TextStyle(color: Colors.white),
-                    decoration: InputDecoration(
+                    style: const TextStyle(color: Colors.white),
+                    decoration: const InputDecoration(
                         focusedBorder: UnderlineInputBorder(
                             borderSide: BorderSide(color: Colors.white)),
                         enabledBorder: UnderlineInputBorder(
@@ -85,24 +86,24 @@ class _RegisterPageState extends State<RegisterPage> {
                     controller: authProvider.passwordController,
                     obscureText: authProvider.obsecureText,
                     decoration: InputDecoration(
-                        border: UnderlineInputBorder(
+                        border: const UnderlineInputBorder(
                             borderSide: BorderSide(color: Colors.white)),
                         fillColor: Colors.transparent,
                         filled: true,
-                        hintStyle: TextStyle(color: Colors.white),
+                        hintStyle: const TextStyle(color: Colors.white),
                         hintText: 'password',
-                        prefixIcon: Icon(
+                        prefixIcon: const Icon(
                           Icons.password,
                           color: Colors.white,
                         ),
                         suffixIcon: InkWell(
                           onTap: () => authProvider.toggleObsecure(),
                           child: authProvider.obsecureText
-                              ? Icon(
+                              ? const Icon(
                             Icons.visibility_off,
                             color: Colors.white,
                           )
-                              : Icon(
+                              : const Icon(
                             Icons.visibility,
                             color: Colors.white,
                           ),
@@ -130,18 +131,18 @@ class _RegisterPageState extends State<RegisterPage> {
                   ),
                   ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                          fixedSize: Size(400, 50),
-                          backgroundColor: Color(ColorsConst.mainColor)),
+                          fixedSize: const Size(400, 50),
+                          backgroundColor: const Color(ColorsConst.mainColor)),
                       onPressed: () {
                         authProvider.signUp(context);
                       },
-                      child: Text('register',
+                      child: const Text('register',
                           style: TextStyle(color: Colors.white))),
-                  Spacer(
+                  const Spacer(
                     flex: 2,
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 8),
+                  const Padding(
+                    padding: EdgeInsets.only(top: 8),
                     child: Text(
                       'Login',
                       style: TextStyle(color: Colors.white),
