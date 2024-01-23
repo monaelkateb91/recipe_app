@@ -28,7 +28,7 @@ void main() async {
     // }
   } catch (e) {
     print(
-        '=========================Error In init Prefrences ${e}========================');
+        '=========================Error In init Prefrences $e========================');
   }
   runApp(MultiProvider(providers: [
     ChangeNotifierProvider(create: (_) => AppAuthProvider()),
@@ -52,13 +52,13 @@ class MyApp extends StatelessWidget {
             border: OutlineInputBorder(borderRadius: BorderRadius.circular(15)),
           ),
           colorScheme: ColorScheme.fromSeed(
-            seedColor: Color(0xfff45b00),
-            primary: Color(0xfff45b00),
-            secondary: Color(0xfff45b00),
+            seedColor: const Color(0xfff45b00),
+            primary: const Color(0xfff45b00),
+            secondary: const Color(0xfff45b00),
           ),
           useMaterial3: true,
         ),
-        home: SplashPage(),
+        home: const SplashPage(),
       ),
     );
   }

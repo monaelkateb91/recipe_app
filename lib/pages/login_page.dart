@@ -48,7 +48,7 @@ class _LoginPageState extends State<LoginPage> {
                         left: 50, right: 50, top: 50, bottom: 25),
                     child: Image.asset(ImagesPath.baseHeader),
                   ),
-                  Text(
+                  const Text(
                     'Login',
                     style: TextStyle(color: Colors.white),
                   ),
@@ -57,8 +57,8 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   TextFormField(
                     controller: authProvider.emailController,
-                    style: TextStyle(color: Colors.white),
-                    decoration: InputDecoration(
+                    style: const TextStyle(color: Colors.white),
+                    decoration: const InputDecoration(
                         focusedBorder: UnderlineInputBorder(
                             borderSide: BorderSide(color: Colors.white)),
                         enabledBorder: UnderlineInputBorder(
@@ -74,7 +74,7 @@ class _LoginPageState extends State<LoginPage> {
                           color: Colors.white,
                         )),
                     validator: (value) {
-                      if (value == null || (value?.isEmpty ?? false)) {
+                      if (value != null || (value?.isEmpty ?? false)) {
                         return 'Email Is Required';
                       }
                       return null;
@@ -85,37 +85,37 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   TextFormField(
                     obscureText: authProvider.obsecureText,
-                    style: TextStyle(color: Colors.white),
+                    style: const TextStyle(color: Colors.white),
                     controller: authProvider.passwordController,
                     decoration: InputDecoration(
                         suffixIcon: InkWell(
                           onTap: () => authProvider.toggleObsecure(),
                           child: authProvider.obsecureText
-                              ? Icon(
+                              ? const Icon(
                             Icons.visibility_off,
                             color: Colors.white,
                           )
-                              : Icon(
+                              : const Icon(
                             Icons.visibility,
                             color: Colors.white,
                           ),
                         ),
-                        focusedBorder: UnderlineInputBorder(
+                        focusedBorder: const UnderlineInputBorder(
                             borderSide: BorderSide(color: Colors.white)),
-                        enabledBorder: UnderlineInputBorder(
+                        enabledBorder: const UnderlineInputBorder(
                             borderSide: BorderSide(color: Colors.white)),
-                        border: UnderlineInputBorder(
+                        border: const UnderlineInputBorder(
                             borderSide: BorderSide(color: Colors.white)),
                         fillColor: Colors.transparent,
                         filled: true,
-                        hintStyle: TextStyle(color: Colors.white),
+                        hintStyle: const TextStyle(color: Colors.white),
                         hintText: 'password',
-                        prefixIcon: Icon(
+                        prefixIcon: const Icon(
                           Icons.password,
                           color: Colors.white,
                         )),
                     validator: (value) {
-                      if (value == null || (value?.isEmpty ?? false)) {
+                      if (value != null || (value?.isEmpty ?? false)) {
                         return 'Password Is Required';
                       }
                       return null;
@@ -126,11 +126,11 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                          fixedSize: Size(400, 50),
-                          backgroundColor: Color(ColorsConst.mainColor)),
+                          fixedSize: const Size(400, 50),
+                          backgroundColor: const Color(ColorsConst.mainColor)),
                       onPressed: () => authProvider.logIn(context),
                       child:
-                      Text('Login', style: TextStyle(color: Colors.white))),
+                      const Text('Login', style: TextStyle(color: Colors.white))),
                   const SizedBox(
                     height: 15,
                   ),
@@ -144,7 +144,7 @@ class _LoginPageState extends State<LoginPage> {
               child: Align(
                 alignment: Alignment.bottomCenter,
                 child: Padding(
-                  padding: EdgeInsets.only(top: 8),
+                  padding: const EdgeInsets.only(top: 8),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [

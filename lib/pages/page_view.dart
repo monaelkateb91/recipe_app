@@ -38,7 +38,7 @@ class _PageViewPageState extends State<PageViewPage> {
     return (index == pageController.page?.toInt())
         ? TextButton.styleFrom(
         foregroundColor: Colors.white,
-        backgroundColor: Color(ColorsConst.mainColor))
+        backgroundColor: const Color(ColorsConst.mainColor))
         : null;
   }
 
@@ -63,15 +63,15 @@ class _PageViewPageState extends State<PageViewPage> {
                   TextButton(
                       style: buttonStyle(0),
                       onPressed: () => onTapOnBtn(0),
-                      child: Text('first page')),
+                      child: const Text('first page')),
                   TextButton(
                       style: buttonStyle(1),
                       onPressed: () => onTapOnBtn(1),
-                      child: Text('second page')),
+                      child: const Text('second page')),
                   TextButton(
                       style: buttonStyle(2),
                       onPressed: () => onTapOnBtn(2),
-                      child: Text('third page')),
+                      child: const Text('third page')),
                 ],
               ),
             Expanded(

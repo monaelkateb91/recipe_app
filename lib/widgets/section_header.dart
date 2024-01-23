@@ -17,9 +17,9 @@ class SectionHeader extends StatelessWidget {
         children: [
           Text(
             sectionName,
-            style: TextStyle(fontSize: 23, fontWeight: FontWeight.w600),
+            style: const TextStyle(fontSize: 23, fontWeight: FontWeight.w600),
           ),
-          Text(
+          const Text(
             'See All',
             style: TextStyle(
                 fontSize: 15,

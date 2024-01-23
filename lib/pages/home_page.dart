@@ -1,10 +1,12 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:provider/provider.dart';
 
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:overlay_kit/overlay_kit.dart';
+import 'package:recipe_app/provider/auth.provider.dart';
 
 
 import 'package:recipe_app/utils/color.dart';
@@ -33,14 +35,14 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: Padding(
+        leading: const Padding(
           padding:
           EdgeInsets.symmetric(horizontal: Numbers.appHorizontalPadding),
           child: Icon(Icons.menu),
         ),
-        actions: [
+        actions: const [
           Padding(
-            padding: const EdgeInsets.symmetric(
+            padding: EdgeInsets.symmetric(
                 horizontal: Numbers.appHorizontalPadding),
             child: Icon(Icons.notifications),
           )
@@ -50,14 +52,14 @@ class _HomePageState extends State<HomePage> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              AdsWidget(),
-              SectionHeader(sectionName: 'Today\'s Fresh Recipes'),
+              const AdsWidget(),
+              const SectionHeader(sectionName: 'Today\'s Fresh Recipes'),
               Card(
                 elevation: 2,
                 child: Container(
                     width: 240,
                     decoration: BoxDecoration(
-                        color: Color(
+                        color: const Color(
                           ColorsConst.containerBackgroundColor,
                         ),
                         borderRadius: BorderRadius.circular(20)),
@@ -69,12 +71,12 @@ class _HomePageState extends State<HomePage> {
                           Row(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Icon(
+                              const Icon(
                                 Icons.favorite_outline,
                                 color: Colors.grey,
                               ),
                               Transform.translate(
-                                offset: Offset(20, 0),
+                                offset: const Offset(20, 0),
                                 child: Image.asset(
                                   'assets/images/frensh_toast.png',
                                   height: 140,
@@ -84,7 +86,7 @@ class _HomePageState extends State<HomePage> {
                               )
                             ],
                           ),
-                          Column(
+                          const Column(
                             children: [
                               Row(
                                 children: [
@@ -97,7 +99,7 @@ class _HomePageState extends State<HomePage> {
                               ),
                               Padding(
                                 padding:
-                                const EdgeInsets.symmetric(vertical: 4),
+                                EdgeInsets.symmetric(vertical: 4),
                                 child: Row(
                                   children: [
                                     Text(
@@ -134,7 +136,7 @@ class _HomePageState extends State<HomePage> {
                               ),
                               Padding(
                                 padding:
-                                const EdgeInsets.symmetric(vertical: 8),
+                                EdgeInsets.symmetric(vertical: 8),
                                 child: Row(
                                   children: [
                                     Text(
@@ -151,7 +153,7 @@ class _HomePageState extends State<HomePage> {
                               ),
                             ],
                           ),
-                          Row(
+                          const Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Row(
@@ -161,7 +163,7 @@ class _HomePageState extends State<HomePage> {
                                     size: 18,
                                     color: Colors.grey,
                                   ),
-                                  const SizedBox(
+                                  SizedBox(
                                     width: 4,
                                   ),
                                   Text(
@@ -177,7 +179,7 @@ class _HomePageState extends State<HomePage> {
                                     size: 18,
                                     color: Colors.grey,
                                   ),
-                                  const SizedBox(
+                                  SizedBox(
                                     width: 4,
                                   ),
                                   Text(
@@ -192,8 +194,12 @@ class _HomePageState extends State<HomePage> {
                       ),
                     )),
               ),
+              const SectionHeader(sectionName: 'New Ingrediants'),
+              ElevatedButton(onPressed: (){
+                Provider.of<AppAuthProvider>(context,listen:false).signOut(context);}, child: const Text("Sign out")),
+              Text(FirebaseAuth.instance.currentUser?.email??'no name')
 
-              ElevatedButton(
+              ,ElevatedButton(
                   onPressed: () async {
                     OverlayLoadingProgress.start();
 
@@ -208,7 +214,7 @@ class _HomePageState extends State<HomePage> {
 
                     OverlayLoadingProgress.stop();
                   },
-                  child: Text('add')),
+                  child: const Text('add')),
             ],
           ),
         ),

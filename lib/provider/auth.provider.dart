@@ -67,7 +67,7 @@ class AppAuthProvider extends ChangeNotifier {
 
           if (context.mounted) {
             Navigator.pushReplacement(
-                context, MaterialPageRoute(builder: (_) => HomePage()));
+                context, MaterialPageRoute(builder: (_) => const HomePage()));
           }
         }
         OverlayLoadingProgress.stop();
@@ -123,7 +123,7 @@ class AppAuthProvider extends ChangeNotifier {
 
           if (context.mounted) {
             Navigator.pushReplacement(
-                context, MaterialPageRoute(builder: (_) => HomePage()));
+                context, MaterialPageRoute(builder: (_) => const HomePage()));
           }
         }
         OverlayLoadingProgress.stop();
@@ -139,7 +139,7 @@ class AppAuthProvider extends ChangeNotifier {
     await FirebaseAuth.instance.signOut();
     if (context.mounted) {
       Navigator.pushAndRemoveUntil(context,
-          MaterialPageRoute(builder: (_) => LoginPage()), (route) => false);
+          MaterialPageRoute(builder: (_) => const LoginPage()), (route) => false);
     }
     OverlayLoadingProgress.stop();
   }
